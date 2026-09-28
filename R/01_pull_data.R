@@ -14,6 +14,9 @@
 #   - The NHANES DNA-methylation epigenetic biomarker file (dnmepi.sas7bdat),
 #     released July 2024, adults 50+ from the same two cycles
 #   - The NCHS public-use linked mortality files, follow-up through 2019-12-31
+#   - For the creatinine check (R/11_creatinine.R): DXA body composition
+#     (five multiply imputed copies per participant), surplus-serum cystatin C,
+#     and body measurements (height)
 
 source("R/utils_download.R")
 
@@ -26,7 +29,8 @@ RAW_FILES <- data.frame(
     "DEMO_B.xpt", "L40_B.xpt", "L11_B.xpt", "L25_B.xpt",
     "dnmepi.sas7bdat",
     "NHANES_1999_2000_MORT_2019_PUBLIC.dat",
-    "NHANES_2001_2002_MORT_2019_PUBLIC.dat"
+    "NHANES_2001_2002_MORT_2019_PUBLIC.dat",
+    "dxx.xpt", "dxx_b.xpt", "SSCYST_A.xpt", "SSCYST_B.xpt", "BMX.xpt", "BMX_B.xpt"
   ),
   url = c(
     file.path(NHANES_BASE, "1999/DataFiles", c("DEMO.xpt", "LAB18.xpt", "LAB11.xpt", "LAB25.xpt")),
@@ -35,7 +39,13 @@ RAW_FILES <- data.frame(
     file.path(MORT_BASE, c(
       "NHANES_1999_2000_MORT_2019_PUBLIC.dat",
       "NHANES_2001_2002_MORT_2019_PUBLIC.dat"
-    ))
+    )),
+    "https://wwwn.cdc.gov/nchs/data/nhanes/public/1999/datafiles/dxx.xpt",
+    "https://wwwn.cdc.gov/nchs/data/nhanes/public/2001/datafiles/dxx_b.xpt",
+    file.path(NHANES_BASE, "1999/DataFiles", c("SSCYST_A.xpt")),
+    file.path(NHANES_BASE, "2001/DataFiles", c("SSCYST_B.xpt")),
+    file.path(NHANES_BASE, "1999/DataFiles", c("BMX.xpt")),
+    file.path(NHANES_BASE, "2001/DataFiles", c("BMX_B.xpt"))
   ),
   stringsAsFactors = FALSE
 )

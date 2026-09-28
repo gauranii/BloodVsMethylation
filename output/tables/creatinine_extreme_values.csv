@@ -1,0 +1,5 @@
+"race","extreme","n","median_creatinine","median_cystatin_c","n_with_cystatin"
+"Black",FALSE,511,79.6,0.95,414
+"Black",TRUE,23,238.7,2.77,23
+"White",FALSE,1005,79.56,0.995,784
+"White",TRUE,17,203.32,2.57,17

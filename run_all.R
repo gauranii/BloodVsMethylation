@@ -17,7 +17,8 @@ scripts <- c(
   "R/07_level_shift_simulation.R",
   "R/08_figures.R",
   "R/09_sensitivity.R",
-  "R/10_rdw.R"
+  "R/10_rdw.R",
+  "R/11_creatinine.R"
 )
 for (s in scripts) {
   message("\n==== ", s, " ====")

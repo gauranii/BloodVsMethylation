@@ -15,6 +15,7 @@ Everything here is public and downloads without registration or a data use agree
 | NHANES 1999-2000 and 2001-2002 demographics, biochemistry, CRP, and complete blood count files | The nine PhenoAge blood markers, age, sex, race/ethnicity, survey design variables |
 | NHANES DNA methylation epigenetic biomarkers file (`dnmepi.sas7bdat`, released July 2024) | 13 epigenetic clocks, including epigenetic PhenoAge, GrimAge, GrimAge2, and DunedinPoAm, for adults 50+ from the same two cycles, with their own survey weight (`WTDN4YR`) and methylation-estimated blood cell proportions |
 | NCHS public-use linked mortality files | Deaths through December 31, 2019 |
+| NHANES 1999-2002 DXA body composition, surplus-serum cystatin C, and body measurements | Appendicular lean mass (five multiply imputed copies) and a muscle-independent kidney marker, for the creatinine check in Result 7 |
 
 The analytic sample is the 1,556 non-Hispanic White (1,022) and non-Hispanic Black (534) adults aged 50 and older with usable methylation data and all nine blood markers (`output/tables/sample_flow.csv`). All estimates use the methylation subsample weights and NHANES's strata and PSUs.
 
@@ -68,7 +69,7 @@ Levine's formula makes blood PhenoAge exactly linear in its nine markers (substi
 
 Two things here I expected, and one I did not.
 
-**Expected: creatinine pushes the gap up.** Creatinine rises with muscle mass as well as with declining kidney function, and it runs higher on average in Black adults, which is why kidney-function equations dropped their race coefficient in 2021. PhenoAge reads higher creatinine as older.
+**Expected, but not for the expected reason: creatinine pushes the gap up.** Creatinine rises with muscle mass as well as with declining kidney function, and it runs higher on average in Black adults, which is why kidney-function equations dropped their race coefficient in 2021. PhenoAge reads higher creatinine as older. I expected muscle mass to be most of it. Result 7 shows it is not: about two-thirds of creatinine's 1.7 years comes from 40 participants in the kidney-disease range, which is real disease.
 
 **Expected: the white-cell pair pushes the gap down.** Together, WBC count and lymphocyte % subtract 1.3 years. Result 3 below shows why this looks like the Duffy-null footprint.
 
@@ -104,7 +105,7 @@ If a marker's racial difference is measurement rather than aging, removing it sh
 | RDW + MCV held at mean | 2.54 | 1.44 (1.34, 1.54) | 1.46 | 1.37 | 0.62 |
 | All five held at mean | 2.13 | 1.28 (1.19, 1.37) | 1.29 | 1.24 | 0.66 |
 
-Removing creatinine takes 1.7 years off the gap and costs nothing measurable in mortality prediction. Removing RDW and MCV takes 1.8 years off and costs a little. Removing all five costs a lot, so these markers carry real mortality information together, even if part of their racial difference is not aging.
+Removing creatinine takes 1.7 years off the gap and costs nothing measurable in mortality prediction. Result 7 qualifies this: most of those 1.7 years come from participants with kidney disease, so "costs nothing in prediction" does not mean "is not health." Removing RDW and MCV takes 1.8 years off and costs a little. Removing all five costs a lot, so these markers carry real mortality information together, even if part of their racial difference is not aging.
 
 No variant shows a significant race-by-measure interaction. That is the kind of check Graf et al. used to argue the measures work equally well across groups, and it gives the same answer for a score with a 2.1-year gap and one with a 5.6-year gap.
 
@@ -154,9 +155,30 @@ So the variants plausibly account for about a third of the RDW gap and most of t
 
 The rows are nested views of one gap, not pieces to add up: adjusting for MCV also removes part of the alpha-thalassemia effect estimated above. Serum iron alone is a noisy measure of iron stores, and low iron in older adults often reflects chronic disease or blood loss, so this part of the gap is ambiguous rather than artifact. Full output in `output/tables/rdw_adjustment.csv` and `rdw_low_iron.csv`.
 
-**RDW and mortality, by race.** Per SD of RDW, the hazard ratio is 1.27 (1.18, 1.37) in White and 1.23 (1.12, 1.35) in Black participants, with no race interaction (p = 0.79). The one earlier race-stratified study I found ([Tajuddin et al. 2017](https://doi.org/10.1186/s12967-017-1313-6), HANDLS) reported a much weaker association in African American participants, though its interaction test was not significant either (p = 0.35). Here, RDW carries similar mortality risk in both groups, which is the opposite of creatinine. Full output in `output/tables/rdw_mortality_by_race.csv`.
+**RDW and mortality, by race.** Per SD of RDW, the hazard ratio is 1.27 (1.18, 1.37) in White and 1.23 (1.12, 1.35) in Black participants, with no race interaction (p = 0.79). The one earlier race-stratified study I found ([Tajuddin et al. 2017](https://doi.org/10.1186/s12967-017-1313-6), HANDLS) reported a much weaker association in African American participants, though its interaction test was not significant either (p = 0.35). Here, RDW carries similar mortality risk in both groups. Full output in `output/tables/rdw_mortality_by_race.csv`.
 
 **Where that leaves RDW.** Roughly a third of its racial difference plausibly traces to inherited hemoglobin variants that are not aging. Some traces to iron status, which is health but not necessarily aging. The remaining 0.4 points or so, about 1.4 PhenoAge years, is unexplained here and may reflect real differences in health. I found no paper that connects RDW's racial difference to biological-age scores.
+
+## Result 7: creatinine is mostly kidney disease, not muscle
+
+Creatinine is made by muscle and cleared by the kidneys, so a higher level can mean more muscle or worse kidneys. `R/11_creatinine.R` separates the two with measurements NHANES took on the same people: DXA appendicular lean mass (arms and legs, five multiply imputed copies, combined with Rubin's rules) for muscle, and cystatin C, a kidney marker that does not depend on muscle, for kidney function. All four adjustments use one common sample of participants with both.
+
+| Sample | Adjusted for | n | Creatinine gap (umol/L, 95% CI) | In PhenoAge years |
+|---|---|---|---|---|
+| Everyone | Age and sex | 1,194 | 22.8 (11.5, 34.1) | 2.40 |
+| | + lean mass | | 21.1 (9.0, 33.1) | 2.22 |
+| | + cystatin C | | 15.5 (7.6, 23.3) | 1.63 |
+| Creatinine at or below 176 umol/L (2 mg/dL) | Age and sex | 1,156 | 8.6 (5.8, 11.4) | 0.91 |
+| | + lean mass | | 5.7 (2.8, 8.6) | 0.60 |
+| | + cystatin C | | 9.0 (6.7, 11.3) | 0.95 |
+
+Two different stories sit inside the one number.
+
+**The extreme values are kidney disease, and they are real.** 40 participants have creatinine above 176 umol/L: 23 of 534 Black participants (4.3%) and 17 of 1,022 White participants (1.7%). Their median cystatin C is 2.6 to 2.8 mg/L, against about 1.0 in everyone else, which confirms advanced kidney disease rather than muscle. They carry most of creatinine's contribution: dropping them takes it from 1.72 to 0.60 years. Kidney failure is more common in Black Americans, and PhenoAge reading that as older is not a measurement artifact.
+
+**In the typical range, about a third is muscle.** Among everyone else, the Black-White creatinine difference is 8.6 umol/L. Lean mass removes about a third of it; cystatin C removes none, so it is not kidney function. The remaining 5.7 umol/L is explained by neither. That is 0.3 PhenoAge years attributable to muscle mass.
+
+So the creatinine part of the argument shrinks. Of its 1.72 years, roughly 1.1 is kidney disease (real health), about 0.3 is muscle mass (not aging), and about 0.3 is unexplained. Without the 40 extreme values, the blood-chemistry gap is 2.9 years instead of 4.3, RDW (2.2 years) and glucose (1.1) are the largest contributors, and the epigenetic gap does not move (-0.69). Full output in `output/tables/creatinine_muscle_kidney.csv`, `creatinine_extreme_values.csv`, and `creatinine_contribution_trimmed.csv`.
 
 ## Sensitivity
 
@@ -167,11 +189,11 @@ The rows are nested views of one gap, not pieces to add up: adjusting for MCV al
 | Winsorize markers at 1%/99% | 1,556 | 3.39 | -0.69 | 2.45 | 1.06 | -1.30 |
 | Unweighted | 1,556 | 3.99 | -0.66 | 2.39 | 1.74 | -1.35 |
 
-RDW's contribution, the white-cell pair, and the epigenetic gap are stable. **Creatinine is not.** Its contribution falls from 1.7 to about 1.1 years once a handful of extreme values are dropped or trimmed, which suggests a few participants with very high creatinine, likely advanced kidney disease, carry part of it. The blood-chemistry gap stays between 3.4 and 4.3 years in every scenario. Full output in `output/tables/sensitivity.csv`.
+RDW's contribution, the white-cell pair, and the epigenetic gap are stable. **Creatinine is not.** Its contribution falls from 1.7 to about 1.1 years once a handful of extreme values are dropped or trimmed. Result 7 confirms with cystatin C that those extreme values are advanced kidney disease. The blood-chemistry gap stays between 3.4 and 4.3 years in every scenario. Full output in `output/tables/sensitivity.csv`.
 
 ## What this does not show
 
-- **That the blood-chemistry gap is wrong.** It shows the gap depends on the instrument, and that most of it comes from three markers with known non-aging reasons to differ by race or ancestry. Some or all of those differences could still reflect real differences in health.
+- **That the blood-chemistry gap is wrong.** It shows the gap depends on the instrument and is a sum of parts that mean different things. Some parts trace to inherited traits that are not aging (hemoglobin variants in RDW and MCV, the Duffy-null pattern in the white-cell markers, some muscle mass in creatinine). Others are real disease (kidney disease in creatinine, possibly iron status in RDW). Some are unexplained.
 - **That epigenetic PhenoAge is the unbiased one.** [Philibert et al. 2020](https://doi.org/10.3390/genes11060685) found ancestry-linked methylation sites inside the epigenetic PhenoAge index itself. Two instruments disagreeing does not say which one is right.
 - **Anything about Duffy genotype directly.** Result 3 is a footprint.
 - **Globin genotypes directly.** Result 6's variant estimate is built from published effect sizes and frequencies, not measured in NHANES.
@@ -183,7 +205,7 @@ The public-use mortality files are deliberately perturbed by NCHS for privacy (s
 
 - The unexplained part of the RDW gap (Result 6). A cohort with globin genotypes, ferritin, and blood chemistry in the same people could measure the variant contribution directly.
 - KDM biological age and homeostatic dysregulation, trained in NHANES III as Graf et al. did, to see whether the same markers drive those gaps.
-- Creatinine against lean mass: NHANES 1999-2004 has DXA body composition (multiply imputed), which could separate muscle mass from kidney function directly.
+- The 5.7 umol/L of typical-range creatinine difference that neither lean mass nor cystatin C explains (Result 7).
 - An exact rebuild of Graf et al.'s own numbers from HRS, whose epigenetic clocks are public; I have not confirmed access terms for the 2016 blood chemistry.
 
 ## Running it
@@ -192,11 +214,11 @@ The public-use mortality files are deliberately perturbed by NCHS for privacy (s
 nix develop --command Rscript run_all.R
 ```
 
-`R/01_pull_data.R` downloads about 25MB into `data_raw/` (gitignored) and caches it. Everything else reads from there.
+`R/01_pull_data.R` downloads about 60MB into `data_raw/` (gitignored) and caches it. Everything else reads from there.
 
 ## Tests
 
-`tests/testthat/` checks the logic this repo adds: that the closed-form PhenoAge matches the published two-step formula wherever the latter is finite, that each marker moves PhenoAge by its documented slope, that the decomposition sums exactly to the total gap and attributes a pure shift to the shifted marker alone, that the download helper rejects error pages and truncated files, and schema and unit invariants on the committed `data_processed/` file.
+`tests/testthat/` checks the logic this repo adds: that the closed-form PhenoAge matches the published two-step formula wherever the latter is finite, that each marker moves PhenoAge by its documented slope, that the decomposition sums exactly to the total gap and attributes a pure shift to the shifted marker alone, that the download helper rejects error pages and truncated files, Rubin's-rules pooling of the multiply imputed DXA estimates, and schema and unit invariants on the committed `data_processed/` file.
 
 ```
 nix develop --command Rscript tests/testthat.R
