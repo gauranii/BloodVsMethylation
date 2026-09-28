@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: >-
+  If you use this repository, please cite it as below. This is an independent
+  replication and extension of one finding in "Testing Black-White Disparities
+  in Biological Aging Among Older Adults in the United States: Analysis of
+  DNA-Methylation and Blood-Chemistry Methods" (Graf et al., American Journal
+  of Epidemiology, 2022, https://doi.org/10.1093/aje/kwab281) -- to cite the
+  original findings, cite that paper directly instead (see README for details).
+title: >-
+  BloodVsMethylation: Why Blood-Chemistry and Epigenetic PhenoAge Disagree About
+  the Black-White Gap in Biological Aging
+authors:
+  - family-names: Gauran
+    given-names: Iris Ivy
+version: 0.1.0
+repository-code: "https://github.com/gauranii/BloodVsMethylation"
+license: MIT
+type: software

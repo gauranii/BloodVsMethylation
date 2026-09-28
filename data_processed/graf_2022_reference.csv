@@ -1,0 +1,7 @@
+measure,graf_cohens_d,graf_d_lower,graf_d_upper,graf_resid_white,graf_resid_black
+blood_phenoage,0.39,0.30,0.48,-0.59,2.24
+HorvathAge,-0.02,-0.10,0.07,0.01,0.00
+HannumAge,-0.37,-0.49,-0.26,0.33,-1.78
+PhenoAge,0.08,-0.04,0.20,-0.10,0.12
+GrimAgeMort,0.36,0.25,0.48,-0.27,1.34
+DunedinPoAm,0.38,0.24,0.51,1.07,1.10
