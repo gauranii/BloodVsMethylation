@@ -1,0 +1,6 @@
+"quantity","expected_from_variants","observed"
+"RDW gap (points)",0.2216975,0.685940152549558
+"MCV gap (fL)",-1.858703,-2.49176547655749
+"PhenoAge years via RDW",0.812878539344535,2.51507585463189
+"PhenoAge years via MCV",-0.552467591637553,-0.740634556332732
+"PhenoAge years, net",0.260410947706982,1.77444129829916

@@ -1,0 +1,4 @@
+"variant","mean_copies_black","mean_copies_white","rdw_effect_per_copy","mcv_effect_per_copy","source","rdw_gap_expected","mcv_gap_expected","phenoage_years_via_rdw","phenoage_years_via_mcv","phenoage_years_net"
+"alpha_thal_3.7_deletion",0.36,0.0065,0.365,-5.258,"Raffield et al. 2018 PLOS Genet Table 1 (JHS, per copy); Black copies = 0.28 x 1 + 0.04 x 2 (JHS); White copies = 2 x 1/310 alleles (Beutler and West 2005 Blood)",0.1290275,-1.858703,0.47309367825653,-0.552467591637553,-0.0793739133810237
+"sickle_cell_trait",0.09,0,0.927,NA,"Raffield et al. 2018 PLOS Genet Table 1 (JHS carriers 9%); MCV effect not taken, treated as 0; White carriers treated as 0",0.08343,0,0.30590537348195,0,0.30590537348195
+"hemoglobin_c_trait",0.03,0,0.308,NA,"Raffield et al. 2018 PLOS Genet Table 1 (JHS carriers 3%); MCV effect not taken, treated as 0; White carriers treated as 0",0.00924,0,0.0338794876060556,0,0.0338794876060556

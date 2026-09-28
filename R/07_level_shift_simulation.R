@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Simulate a Pure Level Shift Against Graf et al.'s Precision Checks
+#------------------------------------------------------------------------------------------
+
 # Can Graf et al.'s two precision checks detect a pure level shift?
 #
 # Their checks: (a) biological-age SDs are similar in Black and White

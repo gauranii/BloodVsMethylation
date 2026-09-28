@@ -72,7 +72,7 @@ Two things here I expected, and one I did not.
 
 **Expected: the white-cell pair pushes the gap down.** Together, WBC count and lymphocyte % subtract 1.3 years. Result 3 below shows why this looks like the Duffy-null footprint.
 
-**Not expected: red cell distribution width is the largest single contributor**, at 2.5 of the 4.3 years. RDW carries the heaviest per-unit weight in the formula (3.7 years per percentage point), and Black participants average 0.69 points higher. I have not established why. Whether that difference reflects aging, or something that is not aging (for example, inherited red-cell traits that are more common in people of African ancestry, or iron status), is the most important open question this repo raises, and I am not going to guess at it here. Mean cell volume, which moves with some of the same red-cell traits, runs the other way (-0.74 years).
+**Not expected: red cell distribution width is the largest single contributor**, at 2.5 of the 4.3 years. RDW carries the heaviest per-unit weight in the formula (3.7 years per percentage point), and Black participants average 0.69 points higher. Result 6 below takes this apart: roughly a third looks like inherited hemoglobin variants, some is iron status, and the rest is unexplained. Mean cell volume, which the same variants lower, runs the other way (-0.74 years).
 
 Full output in `output/tables/blood_phenoage_decomposition.csv`.
 
@@ -128,6 +128,36 @@ A 4.3-year gap that is entirely artifact passes both checks perfectly: identical
 
 This does not show the real gap is an artifact. It shows those two checks cannot tell either way.
 
+## Result 6: what is inside the RDW gap
+
+`R/10_rdw.R` runs three checks. NHANES has no globin genotypes, so the second one is an estimate built from published numbers, not a measurement in this sample.
+
+**Inherited hemoglobin variants, estimated from the literature.** In the Jackson Heart Study ([Raffield et al. 2018](https://doi.org/10.1371/journal.pgen.1007293)), 28% of African American participants carry one copy of the alpha-thalassemia -3.7 deletion and 4% carry two; 9% carry sickle cell trait and 3% hemoglobin C trait. Each raises RDW (0.37 points per deletion copy, 0.93 for sickle cell trait, 0.31 for hemoglobin C trait), and the deletion also lowers MCV (5.3 fL per copy). All three are rare in White Americans ([Beutler and West 2005](https://doi.org/10.1182/blood-2005-02-0713) found the deletion on 1 of 310 alleles). Applying those effect sizes and frequencies here:
+
+| | Expected from the variants | Observed |
+|---|---|---|
+| RDW gap (points) | 0.22 | 0.69 |
+| MCV gap (fL) | -1.86 | -2.49 |
+| PhenoAge years via RDW | +0.81 | +2.52 |
+| PhenoAge years via MCV | -0.55 | -0.74 |
+| PhenoAge years, RDW and MCV together | +0.26 | +1.77 |
+
+So the variants plausibly account for about a third of the RDW gap and most of the MCV gap. Alpha-thalassemia pushes PhenoAge up through RDW and down through MCV by similar amounts, so its net effect is near zero; sickle cell trait, which acts through RDW, is the variant with a net effect. This assumes the Jackson Heart Study's frequencies and effects (a Mississippi cohort) carry over to NHANES, adds the variants' effects together, and treats sickle cell and hemoglobin C trait as having no MCV effect. It is an order-of-magnitude estimate. Full output in `output/tables/rdw_globin_variants.csv` and `rdw_globin_summary.csv`.
+
+**Iron status, measured here.** Serum iron is in the NHANES standard chemistry panel. 34% of Black and 19% of White participants have serum iron below 60 ug/dL.
+
+| RDW gap, adjusted for | Gap (points, 95% CI) | In PhenoAge years |
+|---|---|---|
+| Age and sex | 0.70 (0.57, 0.83) | 2.56 |
+| + serum iron (log) | 0.58 (0.43, 0.73) | 2.11 |
+| + serum iron, hemoglobin, MCV | 0.38 (0.18, 0.58) | 1.40 |
+
+The rows are nested views of one gap, not pieces to add up: adjusting for MCV also removes part of the alpha-thalassemia effect estimated above. Serum iron alone is a noisy measure of iron stores, and low iron in older adults often reflects chronic disease or blood loss, so this part of the gap is ambiguous rather than artifact. Full output in `output/tables/rdw_adjustment.csv` and `rdw_low_iron.csv`.
+
+**RDW and mortality, by race.** Per SD of RDW, the hazard ratio is 1.27 (1.18, 1.37) in White and 1.23 (1.12, 1.35) in Black participants, with no race interaction (p = 0.79). The one earlier race-stratified study I found ([Tajuddin et al. 2017](https://doi.org/10.1186/s12967-017-1313-6), HANDLS) reported a much weaker association in African American participants, though its interaction test was not significant either (p = 0.35). Here, RDW carries similar mortality risk in both groups, which is the opposite of creatinine. Full output in `output/tables/rdw_mortality_by_race.csv`.
+
+**Where that leaves RDW.** Roughly a third of its racial difference plausibly traces to inherited hemoglobin variants that are not aging. Some traces to iron status, which is health but not necessarily aging. The remaining 0.4 points or so, about 1.4 PhenoAge years, is unexplained here and may reflect real differences in health. I found no paper that connects RDW's racial difference to biological-age scores.
+
 ## Sensitivity
 
 | Scenario | n | Blood gap | Epigenetic gap | RDW | Creatinine | White-cell pair |
@@ -144,14 +174,14 @@ RDW's contribution, the white-cell pair, and the epigenetic gap are stable. **Cr
 - **That the blood-chemistry gap is wrong.** It shows the gap depends on the instrument, and that most of it comes from three markers with known non-aging reasons to differ by race or ancestry. Some or all of those differences could still reflect real differences in health.
 - **That epigenetic PhenoAge is the unbiased one.** [Philibert et al. 2020](https://doi.org/10.3390/genes11060685) found ancestry-linked methylation sites inside the epigenetic PhenoAge index itself. Two instruments disagreeing does not say which one is right.
 - **Anything about Duffy genotype directly.** Result 3 is a footprint.
-- **Why RDW differs.** See Result 2.
+- **Globin genotypes directly.** Result 6's variant estimate is built from published effect sizes and frequencies, not measured in NHANES.
 - **Numbers that match Graf et al.'s exactly.** Different survey, different years, different age range. The claim is that the shape reproduces.
 
 The public-use mortality files are deliberately perturbed by NCHS for privacy (synthetic follow-up time or cause of death for select records), so hazard ratios will not match an analysis on the restricted files exactly.
 
 ## Still open
 
-- The RDW question, above everything else.
+- The unexplained part of the RDW gap (Result 6). A cohort with globin genotypes, ferritin, and blood chemistry in the same people could measure the variant contribution directly.
 - KDM biological age and homeostatic dysregulation, trained in NHANES III as Graf et al. did, to see whether the same markers drive those gaps.
 - Creatinine against lean mass: NHANES 1999-2004 has DXA body composition (multiply imputed), which could separate muscle mass from kidney function directly.
 - An exact rebuild of Graf et al.'s own numbers from HRS, whose epigenetic clocks are public; I have not confirmed access terms for the 2016 blood chemistry.

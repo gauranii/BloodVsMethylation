@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Shared Functions: PhenoAge, Age Residuals, Gap Decomposition, Cohen's d
+#------------------------------------------------------------------------------------------
+
 # Blood-chemistry Phenotypic Age and the arithmetic this repo builds on it.
 #
 # Coefficients are Levine et al. 2018 (Aging 10:573), Table 1, as used in

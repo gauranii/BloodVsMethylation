@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Mortality Prediction by Race, with Suspect Markers Neutralized
+#------------------------------------------------------------------------------------------
+
 # Two mortality questions, both with design-weighted Cox models on deaths
 # through 2019-12-31 (months from the exam):
 #

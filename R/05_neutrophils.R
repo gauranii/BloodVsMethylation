@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Neutrophil and Lymphocyte Counts by Race (Duffy-Null Footprint)
+#------------------------------------------------------------------------------------------
+
 # The Duffy-null route, checked as far as public data allows. NHANES has no
 # Duffy genotype, so this looks for its known footprint instead: a lower
 # absolute neutrophil count (ANC) and a larger share of people below the

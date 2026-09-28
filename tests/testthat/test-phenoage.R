@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Tests: PhenoAge Closed Form, Overflow, and Per-Marker Slopes
+#------------------------------------------------------------------------------------------
+
 source(file.path("..", "..", "R", "utils_phenoage.R"), chdir = TRUE)
 
 typical <- data.frame(albumin = 42, creatinine = 80, glucose = 5.2, log_crp = log(0.2),

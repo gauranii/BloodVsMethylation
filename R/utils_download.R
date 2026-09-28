@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Shared Functions: Download Validation for Raw Files
+#------------------------------------------------------------------------------------------
+
 # Download helpers for R/01_pull_data.R, kept separate so they can be tested
 # without triggering any downloads.
 

@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Download NHANES 1999-2002 Labs, DNAm Clocks, and Linked Mortality
+#------------------------------------------------------------------------------------------
+
 # Download every raw file the analysis needs into data_raw/, caching each one.
 #
 # Sources (all public, no registration):

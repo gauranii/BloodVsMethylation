@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Black-White Gap by Aging Measure (NHANES Version of Web Table 9)
+#------------------------------------------------------------------------------------------
+
 # The NHANES version of Graf et al.'s Web Table 9: the Black-White difference
 # in each aging measure, for the same people, in years and as Cohen's d.
 #

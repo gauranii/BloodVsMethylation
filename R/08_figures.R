@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Figure 1 (Gap by Measure) and Figure 2 (Per-Marker Decomposition)
+#------------------------------------------------------------------------------------------
+
 # Figure 1: Black-White gap in each aging measure, NHANES vs. Graf et al.
 # Figure 2: the blood PhenoAge gap split by marker.
 # Colors are the reference categorical slots 1-2 and the blue/red diverging

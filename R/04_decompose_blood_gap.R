@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Split the Blood PhenoAge Gap into Per-Marker Contributions
+#------------------------------------------------------------------------------------------
+
 # Split the Black-White gap in blood PhenoAge advancement into the part each
 # of the nine markers contributes, in years. Exact, not approximate: see
 # decompose_gap() in R/utils_phenoage.R for why.

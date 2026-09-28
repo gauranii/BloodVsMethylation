@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Tests: Gap Decomposition Sums and Attribution
+#------------------------------------------------------------------------------------------
+
 source(file.path("..", "..", "R", "utils_phenoage.R"), chdir = TRUE)
 
 make_people <- function(n, seed) {

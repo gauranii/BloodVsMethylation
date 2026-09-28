@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Sensitivity of the Gap and Decomposition to Extreme Values and Weights
+#------------------------------------------------------------------------------------------
+
 # Does the headline (blood PhenoAge gap, epigenetic PhenoAge gap, and the
 # decomposition's top contributors) survive three choices a reader could
 # reasonably make differently?

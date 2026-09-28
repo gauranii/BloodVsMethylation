@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Merge Raw Files and Compute Blood-Chemistry PhenoAge
+#------------------------------------------------------------------------------------------
+
 # Join demographics, blood chemistry, blood counts, DNA-methylation clocks, and
 # linked mortality into one analysis file, and compute blood PhenoAge.
 
@@ -28,9 +36,9 @@ demo <- bind_rows(read_raw("DEMO.xpt"), read_raw("DEMO_B.xpt")) |>
 # Alkaline phosphatase is LBXSAPSI in 1999-2000 and LBDSAPSI in 2001-2002.
 chem <- bind_rows(
   read_raw("LAB18.xpt") |> transmute(SEQN, albumin = LBDSALSI, creatinine = LBDSCRSI,
-                                     glucose = LBDSGLSI, alp = LBXSAPSI),
+                                     glucose = LBDSGLSI, alp = LBXSAPSI, iron = LBXSIR),
   read_raw("L40_B.xpt") |> transmute(SEQN, albumin = LBDSALSI, creatinine = LBDSCRSI,
-                                     glucose = LBDSGLSI, alp = LBDSAPSI)
+                                     glucose = LBDSGLSI, alp = LBDSAPSI, iron = LBXSIR)
 )
 
 crp <- bind_rows(read_raw("LAB11.xpt"), read_raw("L11_B.xpt")) |>
@@ -38,6 +46,7 @@ crp <- bind_rows(read_raw("LAB11.xpt"), read_raw("L11_B.xpt")) |>
 
 cbc <- bind_rows(read_raw("LAB25.xpt"), read_raw("L25_B.xpt")) |>
   transmute(SEQN, wbc = LBXWBCSI, lymph_pct = LBXLYPCT, mcv = LBXMCVSI, rdw = LBXRDW,
+            hemoglobin = LBXHGB,
             neut_pct = LBXNEPCT, neut_count = LBDNENO, lymph_count = LBDLYMNO)
 
 # ---- DNA-methylation clocks -------------------------------------------------

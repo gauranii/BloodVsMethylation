@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Tests: Schema and Unit Invariants on the Processed Data
+#------------------------------------------------------------------------------------------
+
 path <- file.path("..", "..", "data_processed", "dnam_sample.csv")
 skip_if_not(file.exists(path), "run R/02_build_dataset.R first")
 d <- read.csv(path)

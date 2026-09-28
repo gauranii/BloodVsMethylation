@@ -1,3 +1,11 @@
+#------------------------------------------------------------------------------------------
+#   Project             : Replicating the Blood vs. Epigenetic PhenoAge Divergence
+#   Repository          : BloodVsMethylation
+#   Release Version     : 0.1.0.0
+#   Author              : Iris Ivy Gauran
+#   Description         : Tests: Download Validation Rejects Error Pages and Truncation
+#------------------------------------------------------------------------------------------
+
 source(file.path("..", "..", "R", "utils_download.R"), chdir = TRUE)
 
 test_that("an HTML error page is not mistaken for data", {
