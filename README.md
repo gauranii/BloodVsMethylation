@@ -214,7 +214,7 @@ The public-use mortality files are deliberately perturbed by NCHS for privacy (s
 nix develop --command Rscript run_all.R
 ```
 
-`R/01_pull_data.R` downloads about 60MB into `data_raw/` (gitignored) and caches it. Everything else reads from there.
+`R/01_pull_data.R` downloads about 85MB into `data_raw/` (gitignored) and caches it. Everything else reads from there.
 
 ## Tests
 
