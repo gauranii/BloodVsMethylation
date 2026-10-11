@@ -214,6 +214,8 @@ The public-use mortality files are deliberately perturbed by NCHS for privacy (s
 nix develop --command Rscript run_all.R
 ```
 
+Without cloning first, `nix run github:gauranii/BloodVsMethylation` copies the code into `./BloodVsMethylation` and runs the same pipeline there (`nix run github:gauranii/BloodVsMethylation -- other-folder` picks another folder name). Inside a clone, plain `nix run` runs in place.
+
 `R/01_pull_data.R` downloads about 85MB into `data_raw/` (gitignored) and caches it. Everything else reads from there.
 
 ## Tests
